@@ -1,24 +1,20 @@
 import { useState } from 'react'
+import Wrapper from '../Helpers/Wrapper'
 import Card from '../UI/Card'
 import Button from '../UI/Button'
 import ErrorModal from '../UI/ErrorModal'
 import styles from './AddUser.module.css'
 
 const AddUser = props => {
-	const [user, setUser] = useState(
-		{
-			title: '',
-			body: ''
-		}
-	)
+	const [user, setUser] = useState({
+		title: '',
+		body: ''
+	})
 
-
-	const [error, setError] = useState(
-		{
-			title: '',
-			body: ''
-		}
-	)
+	const [error, setError] = useState({
+		title: '',
+		body: ''
+	})
 
 	const handleUsername = e => {
 		setUser(user => {
@@ -34,13 +30,14 @@ const AddUser = props => {
 
 	const addUserHandler = e => {
 		e.preventDefault()
-		if (e.target.username.value.trim().length === 0 || e.target.age.value.length === 0) {
-			setError(
-				{
-					title: 'Invalid entry',
-					body: 'Name and age cannot be empty!'
-				}
-			)
+		if (
+			e.target.username.value.trim().length === 0 ||
+			e.target.age.value.length === 0
+		) {
+			setError({
+				title: 'Invalid entry',
+				body: 'Name and age cannot be empty!'
+			})
 			return
 		}
 		const newUser = {
@@ -53,21 +50,25 @@ const AddUser = props => {
 			age: ''
 		})
 		e.target.username.value = ''
-		e.target.age.value= ''
+		e.target.age.value = ''
 	}
 
 	const dismissError = () => {
-		setError(
-			{
-				title: '',
-				body: ''
-			}
-		)
+		setError({
+			title: '',
+			body: ''
+		})
 	}
 
 	return (
-		<>
-			{error.title && <ErrorModal title={error.title} body={error.body} dismissError={dismissError} />}
+		<Wrapper>
+			{error.title && (
+				<ErrorModal
+					title={error.title}
+					body={error.body}
+					dismissError={dismissError}
+				/>
+			)}
 			<Card className={styles.input}>
 				<form onSubmit={addUserHandler}>
 					<label htmlFor='username'>Username</label>
@@ -89,7 +90,7 @@ const AddUser = props => {
 					<Button type='submit'>Add User</Button>
 				</form>
 			</Card>
-		</>
+		</Wrapper>
 	)
 }
 
